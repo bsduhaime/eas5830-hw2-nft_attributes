@@ -33,7 +33,8 @@ def get_ape_info(ape_id):
     uri_pull = requests.get(f"https://harlequin-quickest-rhinoceros-835.mypinata.cloud/ipfs/{img_URI[7:]}?pinataGatewayToken=1nTVJjGyxXd4YSteZqcPrAKpu1QcgC4uBMNORSRFY7lrsW_i7DxqWcsXOswCyLoA")
     metadata = uri_pull.json()
     data['image'] = metadata["image"]
-    data['eyes'] = metadata["attributes"][3]["value"]
+    trait_eyes = next((item for item in metadata['attributes'] if item["trait_type"] == "Eyes"))
+    data['eyes'] = trait_eyes["value"]
 
     assert isinstance(data, dict), f'get_ape_info{ape_id} should return a dict'
     assert all([a in data.keys() for a in
