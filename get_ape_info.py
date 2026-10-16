@@ -17,7 +17,7 @@ with open('ape_abi.json', 'r') as f:
 # Connect to an Ethereum node
 api_url = "https://eth-mainnet.g.alchemy.com/v2/alch_vOYi6Z-n40Yh1t6OVQlKe"  # YOU WILL NEED TO PROVIDE THE URL OF AN ETHEREUM NODE
 provider = HTTPProvider(api_url)
-web3 = Web3(provider)
+w3 = Web3(provider)
 
 
 def get_ape_info(ape_id):
