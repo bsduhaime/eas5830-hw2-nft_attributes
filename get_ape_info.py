@@ -30,7 +30,7 @@ def get_ape_info(ape_id):
     ape_contract = w3.eth.contract(address=contract_address, abi=abi)
     data['owner'] = ape_contract.functions.ownerOf(ape_id).call()
     img_URI = ape_contract.functions.tokenURI(ape_id).call()
-    uri_pull = requests.get(f"https://harlequin-quickest-rhinoceros-835.mypinata.cloud/ipfs/{img_URI}?pinataGatewayToken=1nTVJjGyxXd4YSteZqcPrAKpu1QcgC4uBMNORSRFY7lrsW_i7DxqWcsXOswCyLoA")
+    uri_pull = requests.get(f"https://harlequin-quickest-rhinoceros-835.mypinata.cloud/ipfs/{img_URI[7:]}?pinataGatewayToken=1nTVJjGyxXd4YSteZqcPrAKpu1QcgC4uBMNORSRFY7lrsW_i7DxqWcsXOswCyLoA")
     metadata = uri_pull.json()
     data['image'] = metadata["image"]
     data['eyes'] = metadata["attributes"][3]["value"]
