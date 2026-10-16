@@ -15,7 +15,7 @@ with open('ape_abi.json', 'r') as f:
 
 ############################
 # Connect to an Ethereum node
-api_url = ""  # YOU WILL NEED TO PROVIDE THE URL OF AN ETHEREUM NODE
+api_url = "https://eth-mainnet.g.alchemy.com/v2/alch_vOYi6Z-n40Yh1t6OVQlKe"  # YOU WILL NEED TO PROVIDE THE URL OF AN ETHEREUM NODE
 provider = HTTPProvider(api_url)
 web3 = Web3(provider)
 
@@ -27,7 +27,13 @@ def get_ape_info(ape_id):
 
     data = {'owner': "", 'image': "", 'eyes': ""}
 
-    # YOUR CODE HERE
+    ape_contract = w3.eth.contract(address=contract_address, abi=abi)
+    data['owner'] = ape_contract.functions.ownerOf(ape_id).call()
+    img_URI = ape_contract.functions.tokenURI(ape_id).call()
+    uri_pull = requests.get(f"https://harlequin-quickest-rhinoceros-835.mypinata.cloud/ipfs/{img_URI}?pinataGatewayToken=1nTVJjGyxXd4YSteZqcPrAKpu1QcgC4uBMNORSRFY7lrsW_i7DxqWcsXOswCyLoA")
+    metadata = json.loads(uri_pull)
+    data['image'] = metadata["image"]
+    data['eyes'] = metadata["attributes"][3]["value"]
 
     assert isinstance(data, dict), f'get_ape_info{ape_id} should return a dict'
     assert all([a in data.keys() for a in
